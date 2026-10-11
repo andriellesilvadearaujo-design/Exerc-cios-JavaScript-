@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Musical</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #241044, #873c9c);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: #ffffff18;
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffd6ff;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 18px;
+            margin-bottom: 7px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 20px;
+            background: #ffb7e8;
+            color: #321044;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #resultado {
+            margin-top: 25px;
+            padding: 15px;
+            background: #ffffff18;
+            border-radius: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        #resultado:empty {
+            display: none;
+        }
+
+        footer {
+            margin-top: 25px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="container">
+
+    <h1>🎧 Vibe Musical</h1>
+
+    <p>Como você está se sentindo hoje?</p>
+    <p>Descubra uma música para combinar com sua vibe!</p>
+
+    <form id="formVibe">
+
+        <label for="nome">Qual é o seu nome?</label>
+        <input
+            type="text"
+            id="nome"
+            placeholder="Digite seu nome"
+            required
+        >
+
+        <label for="emocao">Escolha seu sentimento:</label>
+
+        <select id="emocao" required>
+            <option value="">Selecione uma opção</option>
+            <option value="feliz">😊 Feliz</option>
+            <option value="triste">🥺 Triste</option>
+            <option value="cansado">😴 Cansado(a)</option>
+            <option value="ansioso">💭 Ansioso(a)</option>
+            <option value="animado">🔥 Animado(a)</option>
+            <option value="apaixonado">❤️ Apaixonado(a)</option>
+        </select>
+
+        <button type="submit">
+            Descobrir minha música 🎵
+        </button>
+
+    </form>
+
+    <section id="resultado" aria-live="polite"></section>
+
+    <footer>Feito com música e personalidade 🎶</footer>
+
+</main>
+
+<script>
+    const form = document.getElementById("formVibe");
+    const resultado = document.getElementById("resultado");
+
+    const musicas = {
+        feliz: {
+            artista: "Dua Lipa",
+            musica: "Levitating",
+            mensagem: "Continue espalhando essa energia boa! ☀️"
+        },
+        triste: {
+            artista: "Jão",
+            musica: "Idiota",
+            mensagem: "Respire. Você não precisa resolver tudo hoje. 💜"
+        },
+        cansado: {
+            artista: "Billie Eilish",
+            musica: "ocean eyes",
+            mensagem: "Descanse um pouco. Você também merece uma pausa. 🌙"
+        },
+        ansioso: {
+            artista: "BTS",
+            musica: "Life Goes On",
+            mensagem: "Vá com calma. Um passo de cada vez. 💜"
+        },
+        animado: {
+            artista: "J-Hope",
+            musica: "MORE",
+            mensagem: "Aumente o som e aproveite sua energia! 🔥"
+        },
+        apaixonado: {
+            artista: "SZA",
+            musica: "Snooze",
+            mensagem: "Hoje o coração está falando mais alto! ❤️"
+        }
+    };
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const nome = document.getElementById("nome").value.trim();
+        const emocao = document.getElementById("emocao").value;
+
+        if (nome === "" || !musicas[emocao]) {
+            resultado.textContent = "Preencha todos os campos!";
+            resultado.style.display = "block";
+            return;
+        }
+
+        const escolha = musicas[emocao];
+
+        resultado.innerHTML = `
+            <h2>Olá, ${nome}! 💜</h2>
+            <p>Sua vibe merece esta música:</p>
+            <h3>🎵 ${escolha.musica}</h3>
+            <p><strong>Artista:</strong> ${escolha.artista}</p>
+            <p>${escolha.mensagem}</p>
+        `;
+
+        resultado.style.display = "block";
+        resultado.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+</script>
+
+</body>
+</html>
